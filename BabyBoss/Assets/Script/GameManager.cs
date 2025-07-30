@@ -5,6 +5,18 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
+
+    [Header("Flag Zone Expansion")]
+    public Collider2D flagZoneCollider;
+    public Transform flagZoneVisual;
+    public float expansionInterval = 30f;
+    public float expansionAmount = 0.5f;
+    public int maxExpansions = 2; 
+
+    private int expansionCount = 0;
+    private Vector3 initialScale;
+
+
     [Header("Countdown UI")]
     public GameObject countdownTextObj;
     public Text countdownText;
@@ -18,7 +30,7 @@ public class GameManager : MonoBehaviour
     public Button mainMenuButton;
 
     [Header("Gameplay Settings")]
-    public float holdTimeToWin = 3f;
+    public float holdTimeToWin = 2f;
 
     [Header("Audio")]
     public AudioClip countdownTickSound;
@@ -35,6 +47,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+
+        initialScale = flagZoneVisual.localScale;
+        StartCoroutine(StartCountdown());
+        StartCoroutine(ExpandFlagZoneRoutine());
 
         if (backgroundMusic != null)
         {
@@ -155,5 +171,30 @@ public class GameManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    IEnumerator ExpandFlagZoneRoutine()
+    {
+        while (expansionCount < maxExpansions)
+        {
+            yield return new WaitForSeconds(expansionInterval);
+            expansionCount++;
+
+            if (flagZoneCollider is CircleCollider2D circle)
+            {
+                circle.radius += expansionAmount;
+            }
+            else if (flagZoneCollider is BoxCollider2D box)
+            {
+                box.size += new Vector2(expansionAmount, expansionAmount);
+            }
+
+            float scaleFactor = 1 + (expansionAmount / flagZoneVisual.localScale.x);
+            flagZoneVisual.localScale *= scaleFactor;
+
+            Debug.Log($"Flag zone expanded ({expansionCount}/{maxExpansions})");
+        }
+
+        Debug.Log("Maximum flag zone size reached!");
     }
 }

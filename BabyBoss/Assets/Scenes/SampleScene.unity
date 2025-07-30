@@ -1215,6 +1215,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28b13485f60d3124eba4022b04221415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flagZoneCollider: {fileID: 758335897}
+  flagZoneVisual: {fileID: 72442342}
+  expansionInterval: 30
+  expansionAmount: 0.05
+  maxExpansions: 3
   countdownTextObj: {fileID: 847933320}
   countdownText: {fileID: 847933322}
   holdCountdownText: {fileID: 830533211}
@@ -1223,7 +1228,7 @@ MonoBehaviour:
   winText: {fileID: 1276401793}
   playAgainButton: {fileID: 540203328}
   mainMenuButton: {fileID: 765133605}
-  holdTimeToWin: 3
+  holdTimeToWin: 2
   countdownTickSound: {fileID: 0}
   countdownEndSound: {fileID: 0}
   backgroundMusic: {fileID: 8300000, guid: 0c1999904ec577a489f602e88ec03335, type: 3}
@@ -2543,7 +2548,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1490072770
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2930,7 +2935,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16, y: 411.1}
+  m_AnchoredPosition: {x: 16, y: 430}
   m_SizeDelta: {x: 231.1, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1731515873
@@ -2966,7 +2971,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Stay here for 3s to win!
+  m_Text: 'Stay here for 2s to win!
 
 '
 --- !u!222 &1731515874
