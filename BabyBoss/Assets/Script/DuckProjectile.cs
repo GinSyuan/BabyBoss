@@ -1,23 +1,24 @@
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class DuckProjectile : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    private Rigidbody2D rb;
+
+    void Awake()
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+    }
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Vector2 direction = (collision.transform.position - transform.position).normalized;
+    void Start()
+    {
+        // Slight initial spin
+        rb.AddTorque(Random.Range(-20f, 20f));
+    }
 
-            Rigidbody2D targetRb = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (targetRb != null)
-            {
-                targetRb.velocity = direction * 6f;  
-            }
-        }
-
-        
-        rb.velocity *= 0.7f;
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Small bounce spin when hitting something
+        rb.AddTorque(Random.Range(-10f, 10f));
     }
 }

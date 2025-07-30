@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private int duckCount;
     private bool hasPushedThisPress = false;
 
+    public AudioClip splashSound;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -68,11 +70,13 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(transform.up * forwardForce);
             hasPushedThisPress = true;
+            audioSource.PlayOneShot(splashSound);
         }
         else if (Input.GetKeyDown(rightKey) && leftPressed && !hasPushedThisPress)
         {
             rb.AddForce(transform.up * forwardForce);
             hasPushedThisPress = true;
+            audioSource.PlayOneShot(splashSound);
         }
 
         // Reset flag if any key is released
@@ -85,10 +89,12 @@ public class PlayerController : MonoBehaviour
         if (leftPressed && !rightPressed)
         {
             transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+         
         }
         else if (rightPressed && !leftPressed)
         {
             transform.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
+       
         }
 
         // Apply drag to simulate water resistance
@@ -114,7 +120,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void ShootDuck()
     {
-        GameObject duck = Instantiate(duckPrefab, duckSpawnPoint.position, Quaternion.identity);
+        GameObject duck = DuckPoolManager.Instance.GetDuck(duckSpawnPoint.position, Quaternion.identity);
         duck.GetComponent<Rigidbody2D>().velocity = transform.up * 50f;
         duckCount--;
 
